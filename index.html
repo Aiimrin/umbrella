@@ -39,6 +39,7 @@
     background: var(--bg); border-radius: 50% 50% 0 0;
   }
   .hero h1 { font-size: 2.4em; font-weight: 700; letter-spacing: 2px; }
+  .hero h1 .subtitle { font-size: 0.5em; opacity: 0.7; margin-left: 8px; }
   .hero p { font-size: 1.15em; color: rgba(255,255,255,0.9); margin-top: 12px; }
   .hero .update { font-size: 0.85em; color: rgba(255,255,255,0.7); margin-top: 8px; }
 
@@ -143,12 +144,20 @@
   #search-results a:hover, #search-results a.active { background: #e8f4fd; }
   #search-results a .match-section { font-size: 0.78em; color: #999; }
   #search-results .no-match { padding: 16px; color: #999; text-align: center; }
+  .search-highlight {
+    background: #ffeb3b; padding: 2px 0; border-radius: 2px;
+    animation: highlight-fade 1.5s ease-out forwards;
+  }
+  @keyframes highlight-fade {
+    0% { background: #ffeb3b; }
+    100% { background: transparent; }
+  }
 
   /* Responsive */
   @media (max-width: 768px) {
     .hero { padding: 32px 16px 28px; }
     .hero h1 { font-size: 1.35em; line-height: 1.4; }
-    .hero h1 span { font-size: 0.65em; display: inline; margin-left: 4px; }
+    .hero h1 .subtitle { font-size: 0.65em; display: block; margin-left: 0; margin-top: 4px; }
     .hero p { font-size: 0.9em; line-height: 1.5; }
     .hero .update { font-size: 0.75em; line-height: 1.4; }
     .container { padding: 16px 10px 40px; }
@@ -181,7 +190,7 @@
 
 <!-- ===== HERO ===== -->
 <div class="hero">
-  <h1>厦大化院2026级本科新生攻略<span style="font-size:0.5em;opacity:0.7;margin-left:8px;">（非官方）</span></h1>
+  <h1>厦大化院2026级本科新生攻略<span class="subtitle">（非官方）</span></h1>
   <p>厦门大学化学化工学院 · 思明校区 · 本科新生专属</p>
   <p class="update">最后更新：2026年8月11日 | 持续更新中 | 信息来源：学院官网、化院梦飞扬公众号、小红书、知乎、厦大官网</p>
 </div>
@@ -910,46 +919,60 @@
   const results = document.getElementById('search-results');
   if (!input || !results) return;
 
+  // Build index: store element reference for precise scrolling
   const index = [];
   document.querySelectorAll('section').forEach(section => {
-    const id = section.id;
+    const sid = section.id;
     const h2 = section.querySelector('h2');
     const sectionTitle = h2 ? h2.textContent.replace(/\s+/g,'').trim() : '';
     section.querySelectorAll('h2,h3,h4,.card,p,li').forEach(el => {
       const text = el.textContent.trim();
       if (text.length < 3 || el.tagName === 'SCRIPT') return;
-      const isHeading = ['H2','H3','H4'].includes(el.tagName);
       index.push({
         text: text.replace(/\s+/g,''),
         display: text.substring(0, 120),
-        tag: isHeading ? el.tagName : 'P',
-        sectionId: id,
+        el: el,
+        sectionId: sid,
         sectionTitle: sectionTitle
       });
     });
   });
 
+  // Highlight tracking
+  let lastHighlights = [];
+
+  function clearHighlights() {
+    lastHighlights.forEach(el => { el.classList.remove('search-highlight'); });
+    lastHighlights = [];
+  }
+
   function search(query) {
+    clearHighlights();
     if (!query || query.length < 1) { results.classList.remove('show'); return; }
     const q = query.toLowerCase();
     const matched = [];
-    const seen = new Set();
+    const seenEls = new Set();
     for (const item of index) {
       if (item.text.toLowerCase().includes(q)) {
-        const key = item.sectionId + '|' + (item.text.substring(0, 60));
-        if (!seen.has(key)) {
-          seen.add(key);
+        if (!seenEls.has(item.el)) {
+          seenEls.add(item.el);
           matched.push(item);
         }
       }
       if (matched.length >= 20) break;
     }
     if (matched.length === 0) {
-      results.innerHTML = '<div class="no-match">未找到相关内容</div>';
+      results.innerHTML = '<div class="no-match">未找到相关内容，建议缩短关键词或更换表述</div>';
     } else {
       results.innerHTML = matched.map((m, i) => {
+        let preview = m.display.substring(0, 80);
+        const idx = m.display.toLowerCase().indexOf(q);
+        if (idx >= 0) {
+          const start = Math.max(0, idx - 10);
+          preview = (start > 0 ? '…' : '') + m.display.substring(start, start + 80);
+        }
         return '<a href="#' + m.sectionId + '" data-idx="' + i + '">' +
-          '<strong>' + escapeHtml(m.display) + '</strong>' +
+          '<strong>' + escapeHtml(preview) + '</strong>' +
           '<span class="match-section"> — ' + escapeHtml(m.sectionTitle) + '</span></a>';
       }).join('');
     }
@@ -962,25 +985,73 @@
     return div.innerHTML;
   }
 
+  let matchedItems = [];
   let debounceTimer;
   input.addEventListener('input', function() {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => search(input.value.trim()), 150);
+    debounceTimer = setTimeout(() => {
+      matchedItems = [];
+      clearHighlights();
+      if (!input.value.trim()) { results.classList.remove('show'); return; }
+      const q = input.value.trim().toLowerCase();
+      const seenEls = new Set();
+      for (const item of index) {
+        if (item.text.toLowerCase().includes(q)) {
+          if (!seenEls.has(item.el)) {
+            seenEls.add(item.el);
+            matchedItems.push(item);
+          }
+        }
+        if (matchedItems.length >= 20) break;
+      }
+      if (matchedItems.length === 0) {
+        results.innerHTML = '<div class="no-match">未找到相关内容，建议缩短关键词或更换表述</div>';
+      } else {
+        results.innerHTML = matchedItems.map((m, i) => {
+          let preview = m.display.substring(0, 80);
+          const idx = m.display.toLowerCase().indexOf(q);
+          if (idx >= 0) {
+            const start = Math.max(0, idx - 10);
+            preview = (start > 0 ? '…' : '') + m.display.substring(start, start + 80);
+          }
+          return '<a href="#" data-idx="' + i + '">' +
+            '<strong>' + escapeHtml(preview) + '</strong>' +
+            '<span class="match-section"> — ' + escapeHtml(m.sectionTitle) + '</span></a>';
+        }).join('');
+      }
+      results.classList.add('show');
+    }, 150);
   });
 
   results.addEventListener('click', function(e) {
     const a = e.target.closest('a');
-    if (a && a.hash) {
-      e.preventDefault();
-      results.classList.remove('show');
-      input.value = '';
-      const target = document.querySelector(a.hash);
-      if (target) {
-        const navH = document.querySelector('.nav-container').offsetHeight;
-        const y = target.getBoundingClientRect().top + window.pageYOffset - navH - 50;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+    if (!a) return;
+    e.preventDefault();
+    const idx = parseInt(a.getAttribute('data-idx'));
+    if (isNaN(idx) || idx >= matchedItems.length) return;
+    const item = matchedItems[idx];
+
+    results.classList.remove('show');
+    input.value = '';
+
+    // Clear old highlights
+    clearHighlights();
+
+    // Highlight matching elements
+    const q = item.text.toLowerCase();
+    // Find all matching elements in the same section
+    matchedItems.forEach(m => {
+      if (m.sectionId === item.sectionId && m.text.toLowerCase().includes(q)) {
+        m.el.classList.add('search-highlight');
+        lastHighlights.push(m.el);
       }
-    }
+    });
+
+    // Scroll to the first match
+    const navH = document.querySelector('.nav-container').offsetHeight;
+    const searchH = document.querySelector('.search-wrap').offsetHeight;
+    const y = item.el.getBoundingClientRect().top + window.pageYOffset - navH - searchH - 20;
+    window.scrollTo({ top: y, behavior: 'smooth' });
   });
 
   let activeIdx = -1;
@@ -996,8 +1067,12 @@
     links.forEach((l, i) => { l.classList.toggle('active', i === activeIdx); });
   }
 
+  // Hide results on outside click, also clear highlights on Escape
   document.addEventListener('click', function(e) {
     if (!input.contains(e.target) && !results.contains(e.target)) results.classList.remove('show');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { clearHighlights(); results.classList.remove('show'); }
   });
 })();
 </script>
