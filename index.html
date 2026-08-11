@@ -120,12 +120,49 @@
   }
   footer a { color: var(--primary-light); text-decoration: none; }
 
+  /* Search bar */
+  .search-wrap {
+    max-width: 600px; margin: 0 auto 0; padding: 0 16px;
+    position: sticky; top: 0; z-index: 101; background: var(--bg); padding-top: 10px; padding-bottom: 8px;
+  }
+  .search-wrap input {
+    width: 100%; padding: 10px 16px; border: 2px solid var(--border); border-radius: 24px;
+    font-size: 0.95em; outline: none; background: white; transition: border-color 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--primary-light); }
+  #search-results {
+    display: none; position: absolute; left: 16px; right: 16px; top: 52px;
+    background: white; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    max-height: 60vh; overflow-y: auto; z-index: 102;
+  }
+  #search-results.show { display: block; }
+  #search-results a {
+    display: block; padding: 10px 16px; color: var(--text); text-decoration: none;
+    border-bottom: 1px solid #f0f0f0; font-size: 0.9em;
+  }
+  #search-results a:hover, #search-results a.active { background: #e8f4fd; }
+  #search-results a .match-section { font-size: 0.78em; color: #999; }
+  #search-results .no-match { padding: 16px; color: #999; text-align: center; }
+
   /* Responsive */
   @media (max-width: 768px) {
-    .hero h1 { font-size: 1.6em; }
-    .container { padding: 20px 14px 60px; }
-    table { font-size: 0.82em; }
-    th, td { padding: 8px 10px; }
+    .hero { padding: 32px 16px 28px; }
+    .hero h1 { font-size: 1.35em; line-height: 1.4; }
+    .hero h1 span { font-size: 0.65em; display: inline; margin-left: 4px; }
+    .hero p { font-size: 0.9em; line-height: 1.5; }
+    .hero .update { font-size: 0.75em; line-height: 1.4; }
+    .container { padding: 16px 10px 40px; }
+    h2 { font-size: 1.3em; }
+    h3 { font-size: 1.05em; }
+    table { font-size: 0.78em; }
+    th, td { padding: 6px 8px; }
+    .card { padding: 16px; }
+    .nav-inner a { padding: 10px 12px; font-size: 0.82em; }
+    .search-wrap { padding: 8px 10px; }
+    .search-wrap input { font-size: 0.88em; padding: 8px 14px; }
+    #search-results { left: 10px; right: 10px; top: 46px; }
+    /* Table scroll on mobile */
+    table { display: block; overflow-x: auto; white-space: nowrap; }
   }
 
   /* TOC sidebar for desktop */
@@ -147,6 +184,12 @@
   <h1>厦大化院2026级本科新生攻略<span style="font-size:0.5em;opacity:0.7;margin-left:8px;">（非官方）</span></h1>
   <p>厦门大学化学化工学院 · 思明校区 · 本科新生专属</p>
   <p class="update">最后更新：2026年8月11日 | 持续更新中 | 信息来源：学院官网、化院梦飞扬公众号、小红书、知乎、厦大官网</p>
+</div>
+
+<!-- ===== SEARCH ===== -->
+<div class="search-wrap">
+  <input type="text" id="search-input" placeholder="搜索关键词（如：选课、军训、校园网、宿舍…）" autocomplete="off">
+  <div id="search-results"></div>
 </div>
 
 <!-- ===== NAVIGATION ===== -->
@@ -860,6 +903,104 @@
   <p>文档持续更新中，如有补充或纠错请通过 GitHub Issues 反馈。</p>
   <p style="margin-top: 8px;">作者：苹果一斤 | 生成时间：2026-08-11 | <a href="#">返回顶部</a></p>
 </footer>
+
+<script>
+(function(){
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  if (!input || !results) return;
+
+  const index = [];
+  document.querySelectorAll('section').forEach(section => {
+    const id = section.id;
+    const h2 = section.querySelector('h2');
+    const sectionTitle = h2 ? h2.textContent.replace(/\s+/g,'').trim() : '';
+    section.querySelectorAll('h2,h3,h4,.card,p,li').forEach(el => {
+      const text = el.textContent.trim();
+      if (text.length < 3 || el.tagName === 'SCRIPT') return;
+      const isHeading = ['H2','H3','H4'].includes(el.tagName);
+      index.push({
+        text: text.replace(/\s+/g,''),
+        display: text.substring(0, 120),
+        tag: isHeading ? el.tagName : 'P',
+        sectionId: id,
+        sectionTitle: sectionTitle
+      });
+    });
+  });
+
+  function search(query) {
+    if (!query || query.length < 1) { results.classList.remove('show'); return; }
+    const q = query.toLowerCase();
+    const matched = [];
+    const seen = new Set();
+    for (const item of index) {
+      if (item.text.toLowerCase().includes(q)) {
+        const key = item.sectionId + '|' + (item.text.substring(0, 60));
+        if (!seen.has(key)) {
+          seen.add(key);
+          matched.push(item);
+        }
+      }
+      if (matched.length >= 20) break;
+    }
+    if (matched.length === 0) {
+      results.innerHTML = '<div class="no-match">未找到相关内容</div>';
+    } else {
+      results.innerHTML = matched.map((m, i) => {
+        return '<a href="#' + m.sectionId + '" data-idx="' + i + '">' +
+          '<strong>' + escapeHtml(m.display) + '</strong>' +
+          '<span class="match-section"> — ' + escapeHtml(m.sectionTitle) + '</span></a>';
+      }).join('');
+    }
+    results.classList.add('show');
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  let debounceTimer;
+  input.addEventListener('input', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => search(input.value.trim()), 150);
+  });
+
+  results.addEventListener('click', function(e) {
+    const a = e.target.closest('a');
+    if (a && a.hash) {
+      e.preventDefault();
+      results.classList.remove('show');
+      input.value = '';
+      const target = document.querySelector(a.hash);
+      if (target) {
+        const navH = document.querySelector('.nav-container').offsetHeight;
+        const y = target.getBoundingClientRect().top + window.pageYOffset - navH - 50;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  });
+
+  let activeIdx = -1;
+  input.addEventListener('keydown', function(e) {
+    const links = results.querySelectorAll('a');
+    if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, links.length - 1); updateActive(links); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); updateActive(links); }
+    else if (e.key === 'Enter' && activeIdx >= 0 && links[activeIdx]) { links[activeIdx].click(); }
+    else { activeIdx = -1; }
+  });
+
+  function updateActive(links) {
+    links.forEach((l, i) => { l.classList.toggle('active', i === activeIdx); });
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!input.contains(e.target) && !results.contains(e.target)) results.classList.remove('show');
+  });
+})();
+</script>
 
 </body>
 </html>
