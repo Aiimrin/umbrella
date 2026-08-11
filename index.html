@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>厦大化院2026级本科新生攻略（非官方）</title>
+<style>
+  :root {
+    --primary: #1a5276;
+    --primary-light: #2980b9;
+    --accent: #c0392b;
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #555;
+    --border: #e0e0e0;
+    --tag: #eaf2f8;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+  }
+
+  /* Header */
+  .hero {
+    background: linear-gradient(135deg, #1a3c4a 0%, #1a5276 40%, #2471a3 100%);
+    color: white;
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: ""; position: absolute; bottom: -40px; left: 0; right: 0; height: 80px;
+    background: var(--bg); border-radius: 50% 50% 0 0;
+  }
+  .hero h1 { font-size: 2.4em; font-weight: 700; letter-spacing: 2px; }
+  .hero p { font-size: 1.15em; color: rgba(255,255,255,0.9); margin-top: 12px; }
+  .hero .update { font-size: 0.85em; color: rgba(255,255,255,0.7); margin-top: 8px; }
+
+  /* Nav */
+  .nav-container { position: sticky; top: 0; z-index: 100; background: white; border-bottom: 1px solid var(--border); box-shadow: var(--shadow); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; overflow-x: auto; gap: 4px; padding: 0 16px 6px; scrollbar-width: thin; scrollbar-color: #ccc transparent; }
+  .nav-inner::-webkit-scrollbar { height: 4px; }
+  .nav-inner::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+  .nav-inner a { display: inline-block; padding: 14px 18px; font-size: 0.92em; color: var(--text); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-inner a:hover, .nav-inner a.active { color: var(--primary-light); border-bottom-color: var(--primary-light); }
+
+  /* Content */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+  section { margin-bottom: 48px; }
+  h2 {
+    font-size: 1.65em; color: var(--primary); padding-bottom: 10px;
+    border-bottom: 3px solid var(--primary-light); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2 .icon { font-size: 1.2em; }
+  h3 { font-size: 1.2em; color: #34495e; margin: 28px 0 12px; padding-left: 12px; border-left: 4px solid var(--primary-light); }
+  h4 { font-size: 1.05em; color: #555; margin: 20px 0 8px; }
+
+  p { margin-bottom: 12px; color: var(--text-light); }
+  ul, ol { margin: 8px 0 16px 24px; color: var(--text-light); }
+  li { margin-bottom: 4px; }
+
+  /* Cards */
+  .card {
+    background: var(--card-bg); border-radius: 10px; padding: 24px; margin-bottom: 20px;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .card h3 { margin-top: 0; border-left: none; padding-left: 0; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.93em; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); }
+  th { background: var(--primary); color: white; padding: 12px 16px; text-align: left; font-weight: 600; }
+  td { padding: 10px 16px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) { background: #fafbfc; }
+
+  /* Tags / Badges */
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 0.82em; font-weight: 600;
+  }
+  .badge-red { background: #fdecea; color: #c0392b; }
+  .badge-blue { background: #e8f4fd; color: #2471a3; }
+  .badge-green { background: #e8f8f0; color: #1e8449; }
+  .badge-orange { background: #fef5e7; color: #b7950b; }
+  .badge-purple { background: #f4ecf7; color: #7d3c98; }
+
+  /* Warning box */
+  .warn {
+    background: #fef9e7; border-left: 4px solid #f1c40f; padding: 16px 20px;
+    border-radius: 0 8px 8px 0; margin: 16px 0;
+  }
+  .warn strong { color: #b7950b; }
+  .tip {
+    background: #eafaf1; border-left: 4px solid #2ecc71; padding: 16px 20px;
+    border-radius: 0 8px 8px 0; margin: 16px 0;
+  }
+  .tip strong { color: #1e8449; }
+  .danger {
+    background: #fdedec; border-left: 4px solid #e74c3c; padding: 16px 20px;
+    border-radius: 0 8px 8px 0; margin: 16px 0;
+  }
+  .danger strong { color: #c0392b; }
+
+  /* Checklist style */
+  .checklist { list-style: none; margin-left: 0; }
+  .checklist li { padding: 6px 0; }
+  .checklist li::before { content: "☑ "; color: #2ecc71; font-weight: bold; }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 32px 20px; color: #999; font-size: 0.85em;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  footer a { color: var(--primary-light); text-decoration: none; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.6em; }
+    .container { padding: 20px 14px 60px; }
+    table { font-size: 0.82em; }
+    th, td { padding: 8px 10px; }
+  }
+
+  /* TOC sidebar for desktop */
+  @media (min-width: 1200px) {
+    .toc-sidebar {
+      position: fixed; left: max(16px, calc((100vw - 1200px) / 2 - 240px)); top: 100px;
+      width: 200px; background: white; border-radius: 10px; box-shadow: var(--shadow);
+      padding: 16px; font-size: 0.85em; max-height: 70vh; overflow-y: auto;
+    }
+    .toc-sidebar a { display: block; padding: 5px 0; color: var(--text-light); text-decoration: none; border-bottom: 1px solid #f0f0f0; }
+    .toc-sidebar a:hover { color: var(--primary-light); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <h1>厦大化院2026级本科新生攻略<span style="font-size:0.5em;opacity:0.7;margin-left:8px;">（非官方）</span></h1>
+  <p>厦门大学化学化工学院 · 思明校区 · 本科新生专属</p>
+  <p class="update">最后更新：2026年8月11日 | 持续更新中 | 信息来源：学院官网、化院梦飞扬公众号、小红书、知乎、厦大官网</p>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav-container">
+  <div class="nav-inner">
+    <a href="#s1">培养方案</a>
+    <a href="#s2">英语分级考</a>
+    <a href="#s3">选课攻略</a>
+    <a href="#s4">化院专属</a>
+    <a href="#s5">奖学金</a>
+    <a href="#s6">转专业 & 双学位</a>
+    <a href="#s7">宿舍</a>
+    <a href="#s8">校园卡</a>
+    <a href="#s9">校园网</a>
+    <a href="#s10">医保 & 医疗</a>
+    <a href="#s11">快递 & 交通</a>
+    <a href="#s12">报到流程</a>
+    <a href="#s13">军训</a>
+    <a href="#s14">社团 & 活动</a>
+    <a href="#s15">安全警示</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ===== SECTION 1: 培养方案政策变化 ===== -->
+<section id="s1">
+  <h2><span class="icon"></span>一、2026级培养方案重大改革</h2>
+
+  <p>2026年厦门大学推出<strong>"三个首次、三个全面"</strong>招生培养改革，是近年最大力度的人才培养方案升级。以下内容综合自厦大官方发布会及多家媒体报道。</p>
+
+  <div class="card">
+    <h3><span class="badge badge-red">NEW</span> 三个首次</h3>
+
+    <h4>1. 首次大类分流100%专业任选</h4>
+    <p>2026级新生完成大类基础课程后，在所属招生大类内<strong>自由选择专业——无名额限制、无附加成绩及其他条件、不按绩点排名筛选</strong>。往年大类分流中申请人数多于接收计划时会参考高考分数、绩点等排序，新政策彻底取消了这些限制。</p>
+
+    <h4>2. 首次设立"南强书院"卓越领航班 <span class="badge badge-blue">本博贯通</span></h4>
+    <ul>
+      <li><strong>定位</strong>：本博一体化专属培养，培育学科交叉领军人才</li>
+      <li><strong>招生方式</strong>：高考直招，依托<strong>理科试验班</strong>和<strong>工科试验班</strong></li>
+      <li><strong>培养路径</strong>：前两年不分专业大类培养 → 第二学年末自主选择全校专业 → 选拔80%进入本博衔接路径 → 第三学年"项目制+学分制"教学</li>
+      <li><strong>管理</strong>：思明、翔安两校区集中住宿，"师生共生、学科共融"社区</li>
+    </ul>
+
+    <h4>3. 首次推出"凌云计划"拔尖人才培养</h4>
+    <ul>
+      <li><strong>选拔</strong>：第二学年末从部分专业选拔，要求专业成绩排名前10%</li>
+      <li><strong>学制</strong>："2+1+5"（四年制）/ "3+1+5"（五年制），<strong>最快8年获博士学位</strong>，比常规缩短3年以上</li>
+      <li><strong>特色</strong>：PBL项目式学习、一对一导师、一生一方案、不低于5万元专项经费</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="badge badge-red">NEW</span> 三个全面</h3>
+
+    <h4>1. 全面实施"满志愿不调剂"</h4>
+    <p>在实施"院校专业组"模式和传统高考省份的普通本科批（不含马来西亚分校），考生填满专业志愿且不重复、体检合格，<strong>100%不调剂</strong>。</p>
+
+    <h4>2. 全面放开转专业</h4>
+    <p>转出<strong>不设门槛</strong>，转入不再设置高考成绩、课程绩点、成绩排名、先修课程等限制。大一下至大三每学期均可申请，单次可填2个志愿，累计成功转专业不超过2次。</p>
+
+    <h4>3. 全面推进复合型人才培养</h4>
+    <ul>
+      <li><strong>23个双学士学位项目</strong>："X+人工智能""X+法学""外国语言文学+X"等方向</li>
+      <li><strong>40个微专业项目</strong>：数智化学、低空技术与控制工程、人工智能金融学等，10-15学分轻量化课程</li>
+      <li>自2026级起，微专业学分可同步计入主修专业跨学科复合模块毕业要求学分</li>
+    </ul>
+  </div>
+
+  <p><strong>2026年招生规模</strong>：全国31个省（区、市）计划招收本科生 <strong>6390人</strong>，89个招生专业按<strong>37个大类</strong>招生。</p>
+</section>
+
+<!-- ===== SECTION 2: 英语分级考试 ===== -->
+<section id="s2">
+  <h2><span class="icon"></span>二、入学英语分级考试</h2>
+
+  <div class="card">
+    <h3><span class="badge badge-red">2025改革</span> A/B/C 三类新制（2025级起执行）</h3>
+    <p>2025年3月厦大发布《大学外语改革实施方案》，核心变化：<strong>所有等级仅需大一一年完成，不再因分级考试结果而多读英语！</strong>总学分统一为 <strong>6学分 = 4学分（必修）+ 2学分（X弹性学分）</strong>。</p>
+
+    <table>
+      <tr><th>类别</th><th>培养目标</th><th>难度</th><th>第一学期</th><th>第二学期</th></tr>
+      <tr><td><strong>A类</strong></td><td>学业胜任力</td><td>基础</td><td>大学英语A1（2学分）</td><td>大学英语A2（2学分）</td></tr>
+      <tr><td><strong>B类</strong></td><td>沟通胜任力</td><td>中等</td><td>大学英语B1（2学分）</td><td>大学英语B2（2学分）</td></tr>
+      <tr><td><strong>C类</strong></td><td>全球胜任力</td><td>最高</td><td>大学英语C1（2学分）</td><td>大学英语C2（2学分）</td></tr>
+    </table>
+
+    <h4>X弹性学分（2学分）获取方式 — 8选1达标即可：</h4>
+    <ol>
+      <li>修读"一带一路"沿线国家语言与文化课程</li>
+      <li>修读全英语授课课程</li>
+      <li><strong>雅思 ≥ 6.0</strong>（有效期内）</li>
+      <li><strong>托福 ≥ 80分</strong>（有效期内）</li>
+      <li><strong>CET-6 ≥ 425分</strong>（在校期间）</li>
+      <li><strong>CET-4 ≥ 500分</strong>（在校期间）</li>
+      <li>通过其他语种国家认可水平测试</li>
+      <li>经外语教学部认定的其他项目或课程</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>考试基本信息</h3>
+    <table>
+      <tr><th>事项</th><th>2026级</th><th>2025级</th></tr>
+      <tr><td>预演测试</td><td>8月15日-16日 9:00-18:00</td><td>—</td></tr>
+      <tr><td>正式考试</td><td><strong>8月20日</strong> 9:00-18:00</td><td>8月20日</td></tr>
+      <tr><td>补考</td><td>—</td><td>8月30日</td></tr>
+      <tr><td>考试时长</td><td>90分钟</td><td>90分钟</td></tr>
+    </table>
+    <ul>
+      <li><strong>形式</strong>：线上考试，平台 https://lnt.xmu.edu.cn</li>
+      <li><strong>内容</strong>：听力、单选、完型、阅读等，侧重学术词汇</li>
+      <li><strong>老生建议</strong>：当天不迟于16:30登录，保证充足答题时间</li>
+      <li><strong>免考</strong>：创意与创新学院不参加，统一进入A类；体育教学部统一修读大英(1)(2)</li>
+    </ul>
+
+    <div class="tip"><strong>老生建议：</strong>按真实水平诚信考试，匹配合适的难度等级。考试成绩不真实进入不相称类别，可能影响绩点。</div>
+  </div>
+</section>
+
+<!-- ===== SECTION 3: 选课攻略 ===== -->
+<section id="s3">
+  <h2><span class="icon"></span>三、选课攻略</h2>
+
+  <div class="card">
+    <h3>2025级选课时间线 <span class="badge badge-orange">往届参考</span></h3>
+    <p style="font-size:0.85em;color:#999;">以下为2025级时间安排，2026级具体时间请以教务处通知为准。</p>
+    <table>
+      <tr><th>轮次</th><th>时间</th><th>规则</th></tr>
+      <tr><td>第一轮（预选）</td><td>9月15日15:00 — 9月17日14:00</td><td>随机筛选，机会均等，可选可退</td></tr>
+      <tr><td>查看抽签结果</td><td>9月18日14:00</td><td>—</td></tr>
+      <tr><td>第二轮（正选）</td><td>9月19日10:00 — 9月21日17:00</td><td>先到先得</td></tr>
+    </table>
+    <p>选课网址：<strong>https://xk.xmu.edu.cn</strong>，账号学号，初始密码身份证后六位。</p>
+  </div>
+
+  <div class="card">
+    <h3>选课顺序建议</h3>
+    <ol>
+      <li>本专业计划课程（必修课）</li>
+      <li>体育课 / 大学英语课程</li>
+      <li>本专业计划课程（选修课）</li>
+      <li>方案外课程 / 校选课</li>
+    </ol>
+  </div>
+
+  <h4>重要注意事项</h4>
+  <ul>
+    <li><strong>不可跨校区选课</strong>，不可选择时间冲突的课程</li>
+    <li>第一轮预选每门课选满<strong>3个志愿教学班</strong>，增加中选概率</li>
+    <li>留意教务通知，选课人数过低的课程可能被取消</li>
+    <li>写作课程可作为《大学语文》的学分替代课程</li>
+    <li><strong>游泳是必修学分</strong>（大学三年修满4个体育学分，含1个游泳学分）。游泳学分可通过<strong>直接参加游泳考试</strong>或<strong>选修游泳课</strong>两种方式获得，互不冲突</li>
+    <li>每学期至多修习1门体育课</li>
+  </ul>
+
+  <div class="tip"><strong>老生建议：</strong>非必修课优先选"期末写论文"而非"闭卷考试"的课；开学前先从学长姐处获取教师"红黑榜"；第一轮尽量多选课，中选后再退不想要的。</div>
+</section>
+
+<!-- ===== SECTION 4: 化学化工学院（学院专属） ===== -->
+<section id="s4">
+  <h2><span class="icon"></span>四、化学化工学院专属指南</h2>
+  <p>以下内容综合自学院官网（chem.xmu.edu.cn）、2025级开学典礼、家长见面会及"化院梦飞扬"公众号。</p>
+
+  <div class="card">
+    <h3><span class="badge badge-blue">学院数据</span> 2025级新生概况</h3>
+    <table>
+      <tr><th>类别</th><th>人数</th></tr>
+      <tr><td>本科新生</td><td><strong>262人</strong></td></tr>
+      <tr><td>全体新生（含硕博）</td><td>1028人（首次突破千人）</td></tr>
+    </table>
+    <p>报到时间参考（以2025级为例）：<strong>8月29日—30日</strong>。思明校区报到点在<strong>芙蓉一楼前</strong>。 <span class="badge badge-orange">参考信息</span></p>
+  </div>
+
+  <div class="card">
+    <h3>"双报到"机制 <span class="badge badge-red">学院特色</span></h3>
+    <p>自2021年起，学院鼓励新生在递交录取通知书的同时递交<strong>入党申请书</strong>，完成开学"双报到"。2025年迎新期间共收到新生入党申请书<strong>101份</strong>。校长张宗益等校领导亲临迎新点慰问，并向递交入党申请书的新生代表赠送《中国共产党章程》。</p>
+  </div>
+
+  <div class="card">
+    <h3>开学典礼 & 开学第一课</h3>
+    <p>2025年8月31日上午，学院在<strong>建南大会堂</strong>举行开学典礼。国家杰出青年科学基金获得者、特聘教授<strong>颜晓梅</strong>讲授"开学第一课"——《传承·创新·探索：我的科学旅程与你们的无限可能》。</p>
+    <ul>
+      <li><strong>对本科生</strong>：认真学习、坚持锻炼，争取大二或大三进入实验室开展科研训练，培养科研思路</li>
+      <li>"创新，不是天才的专利；突破，也并非遥不可及。专业是跨界突破的起点！"</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>培养方案获取渠道</h3>
+    <p>各专业（化学/化工/化生等）培养方案差异较大，<strong>请以官方渠道为准</strong>：</p>
+    <ul>
+      <li><strong>学院官网</strong>：<a href="https://chem.xmu.edu.cn" target="_blank">https://chem.xmu.edu.cn</a> → 本科教育/通知公告</li>
+      <li><strong>厦门大学教务处</strong>：<a href="https://jwc.xmu.edu.cn" target="_blank">https://jwc.xmu.edu.cn</a></li>
+      <li><strong>参考文件</strong>：<a href="./2024级培养方案.zip">2024级培养方案.zip</a>（往年方案，仅供参考格式，请以入学当年最新版为准）</li>
+    </ul>
+    <div class="warn"><strong>注意：</strong>网上流传的培养方案截图大多不完整或仅针对特定专业。化工专业的要求（如经管类各≥1学分）与化学专业不同，不可混用。务必以教务系统内的本人专业培养方案为准。</div>
+  </div>
+
+  <div class="card">
+    <h3>化学类（强基计划）<span class="badge badge-orange">参考信息</span></h3>
+    <ul>
+      <li><strong>"3+1+X"本硕博贯通培养</strong>，前三年本科，第四年进入本研衔接</li>
+      <li>"多次选拔、动态进出"机制，每学年末综合考查，三年级末转段考核</li>
+      <li>培养目标：扎实化学基础知识和实验技能，学科交叉思维和科研创新能力</li>
+    </ul>
+  </div>
+
+  <h3>家长见面会</h3>
+  <p>学院每年在迎新期间举行新生家长见面会。2025级会议于8月30日上午在化学报告厅举行，近<strong>300名家长</strong>参加。副院长陈嘉嘉详细介绍学科特色与人才培养，辅导员介绍家校联动渠道。现场发放《致化学化工学院本科新生家长的一封信》，号召家校协同关注学业动态、生涯规划和身心健康。</p>
+
+  <h3>科创竞赛与科研 <span class="badge badge-purple">学院亮点</span></h3>
+  <p>2025年，学院共培育<strong>200余支学生团队、600余名学生</strong>投身各级科创竞赛。设有"延江学科竞赛奖励金"，2025年发放<strong>5.67万元</strong>，奖励28支团队、151人次。</p>
+  <h4>重点赛事成绩：</h4>
+  <ul>
+    <li><strong>挑战杯</strong>：2022级本科生胡天琪获第十九届"挑战杯"全国二等奖</li>
+    <li><strong>全国大学生化学实验创新设计大赛</strong>：获总决赛<strong>特等奖</strong>（482所高校、1364支队伍中仅18项特等奖）</li>
+    <li><strong>iGEM（国际基因工程机器大赛）</strong>：2025年斩获金奖，累计<strong>第15枚金奖</strong></li>
+    <li><strong>全国大学生电化学测量技术竞赛</strong>：首次获得特等奖</li>
+  </ul>
+
+  <h4>"育苗"培养体系：</h4>
+  <ul>
+    <li><strong>低年级启蒙</strong>："育苗杯"化学知识竞赛、现代化工技术知识竞赛</li>
+    <li><strong>科研资助</strong>："化学育苗基金"和"化工育苗基金"资助本科生早进实验室</li>
+    <li><strong>创新学分</strong>：每名本科生必须修满<strong>2个创新学分</strong>，激励参加大创和科研</li>
+    <li><strong>学生科创中心</strong>：2025年初正式成立，打通科研创新到实践育人的关键路径</li>
+    <li><strong>新生福利</strong>：向每位本科新生发放《科创竞赛手册》，鼓励早进课题组</li>
+  </ul>
+
+  <div class="tip"><strong>学长学姐经验：</strong>大一时就可以申请大创课题并加入导师课题组！2022级本科生胡天琪大一开始就加入叶龙武教授课题组，以<strong>第一作者发表SCI一区论文</strong>。学院仪器"去黑箱化"教学改革也让本科生能自主拆装调试教学型仪器（如教学质谱仪），真正从"操作工"变成"创造者"。</div>
+
+  <h3>实验室安全教育</h3>
+  <p>新进实验室的学生<strong>必须先接受安全教育培训</strong>（包括防火、防爆、防毒、防触电、防盗、事故处理与自救互救等），通过后方可进入实验室。安全教育从入学到毕业贯穿始终，涵盖教育讲座、参观展览、观看影视片、安全手册、模拟演练等多种形式。</p>
+
+  <h4>教材与学习资源</h4>
+  <ul>
+    <li>二手书渠道：校内跳蚤市场、学长学姐转让、闲鱼</li>
+    <li>实验课需提前准备<strong>实验服、护目镜</strong>，实验报告认真写（占分比重大）</li>
+    <li>图书馆23点关门，善用座位预约系统</li>
+    <li>B站大学网课辅助学习</li>
+  </ul>
+
+  <h4>保研/考研参考</h4>
+  <ul>
+    <li>化工学院保研率较高，关注每年推免名额通知</li>
+    <li>大二关注夏令营信息，提前联系导师</li>
+    <li>大创项目+实验室经历对保研帮助极大</li>
+    <li>大一趁基础还在尽早通过四六级、计算机二级</li>
+  </ul>
+
+  <div class="warn"><strong>公众号推荐：</strong>"<strong>厦门大学化院梦飞扬</strong>"是化学化工学院官方公众号（微信搜索关注），发布学院通知、活动预告、学生风采、新生攻略等学院一手信息。本文档中学院相关数据均来源于该公众号及学院官网 chem.xmu.edu.cn。</div>
+</section>
+
+<!-- ===== SECTION 5: 奖学金 & 助学金 ===== -->
+<section id="s5">
+  <h2><span class="icon"></span>五、奖学金 & 助学金</h2>
+
+  <div class="card">
+    <h3>本科生国家助学金</h3>
+    <table>
+      <tr><th>等级</th><th>金额</th><th>条件</th></tr>
+      <tr><td>国家助学金一等</td><td><strong>4000元/学年</strong></td><td>家庭经济困难认定，优先困难程度高者</td></tr>
+      <tr><td>国家助学金二等</td><td><strong>3000元/学年</strong></td><td>同上</td></tr>
+    </table>
+    <p>分10个月按月发放至圈存银行卡。申请截止：2025年<strong>10月31日</strong>前，通过学工系统（xmuxg.xmu.edu.cn）提交。</p>
+  </div>
+
+  <div class="card">
+    <h3>秋季专项生活困难补助</h3>
+    <table>
+      <tr><th>等级</th><th>一等</th><th>二等</th><th>三等</th></tr>
+      <tr><td>金额</td><td>1500元</td><td>1000元</td><td>500元</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>重点社会捐赠助学金</h3>
+    <table>
+      <tr><th>名称</th><th>金额</th><th>名额</th></tr>
+      <tr><td>安踏和敏助学金</td><td>一等6000 / 二等4000</td><td>共650名</td></tr>
+      <tr><td>周詠棠助贷学基金</td><td>一等5000 / 二等3000</td><td>共250名</td></tr>
+      <tr><td>潮汕校友会助学金</td><td>一等8000 / 二等6000</td><td>不限</td></tr>
+      <tr><td>胡培兆助学金</td><td>5000元/人</td><td>本科生10名+研究生10名</td></tr>
+    </table>
+    <p>另有秦岭明助学金、大连校友会助学金、陈掌谔助学金、艾德励学金等十余项。详情关注"<strong>厦大资助</strong>"微信公众号。</p>
+  </div>
+
+  <div class="tip"><strong>申请提示：</strong>所有助学金需先通过家庭经济困难资格认定，在学工系统主动提交申请。优先保障脱贫家庭、低保家庭、孤儿、残疾学生、烈士子女等特殊群体。一年级新生无成绩要求。</div>
+</section>
+
+<!-- ===== SECTION 6: 转专业 & 双学位 ===== -->
+<section id="s6">
+  <h2><span class="icon"></span>六、转专业 & 双学位</h2>
+
+  <div class="card">
+    <h3>转专业（2026级新政）</h3>
+    <ul>
+      <li>转出<strong>不设门槛</strong>，转入不设高考成绩、绩点、排名、先修课程等限制</li>
+      <li><strong>大一下至大三</strong>每学期均可申请</li>
+      <li>单次可填报<strong>2个志愿</strong></li>
+      <li>累计成功转专业不超过<strong>2次</strong></li>
+      <li>以接收学院综合考核为准</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>双学位 & 微专业</h3>
+    <ul>
+      <li><strong>23个双学士学位项目</strong>："X+人工智能""X+法学""外国语言文学+X"等</li>
+      <li><strong>40个微专业项目</strong>：数智化学、低空技术与控制工程、人工智能金融学等</li>
+      <li>微专业10-15学分轻量化课程包，学分可计入主修跨学科复合模块</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== SECTION 7: 宿舍 ===== -->
+<section id="s7">
+  <h2><span class="icon"></span>七、宿舍情况</h2>
+
+  <div class="card">
+    <h3>基本条件</h3>
+    <ul>
+      <li>四人间为主，大部分配备独立卫浴 + 空调</li>
+      <li>床铺尺寸：<strong>2.0m × 0.9m</strong>（含框架），实际使用约1.9m × 0.9m</li>
+      <li>工作日晚上<strong>12:00熄灯断电</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>化院学生宿舍分配 <span class="badge badge-orange">参考信息</span></h3>
+    <p>根据历年安排，化学化工学院本科生主要分配如下（具体以当年学校通知为准）：</p>
+    <table>
+      <tr><th>性别</th><th>宿舍楼</th><th>园区</th><th>卫浴类型</th></tr>
+      <tr><td>男生</td><td><strong>芙蓉一、南光七</strong></td><td>芙蓉园区（本部核心区）</td><td>独立卫浴</td></tr>
+      <tr><td>女生</td><td><strong>石井四、石井五</strong></td><td>石井园区（依山）</td><td>公共卫浴</td></tr>
+    </table>
+    <p style="font-size:0.85em;color:#999;">女生石井园区需要爬山，建议准备舒适爬坡鞋；石井四/五为公共浴室，需准备洗漱筐/洗澡包。</p>
+  </div>
+
+  <div class="card">
+    <h3>宿舍必备好物清单</h3>
+    <h4>高优先级：</h4>
+    <ul>
+      <li><strong>全包一体式床帘+蚊帐</strong>：厦门蚊虫多，全包式防虫+隐私</li>
+      <li><strong>洞洞鞋/拖鞋</strong>：厦大雨多台风频繁，雨天神器</li>
+      <li><strong>插排（排插）</strong>：每个桌子只有一个插座</li>
+      <li><strong>除湿袋/除湿盒</strong>：厦门非常潮湿，挂衣柜防霉</li>
+      <li><strong>驱虫防蚊用品</strong>：风油精、花露水必备</li>
+      <li><strong>防晒用品</strong>：厦大日常"一直打伞"，防晒+防雨+防蝉尿</li>
+    </ul>
+    <h4>强烈推荐：</h4>
+    <ul>
+      <li><strong>床垫</strong>（学校床板硬，推荐50D高密度海绵5cm厚）</li>
+      <li><strong>小夜灯/酷毙灯</strong>（熄灯后使用）</li>
+      <li><strong>洗漱筐/洗澡包</strong>（公共浴室用）</li>
+      <li><strong>质量好的雨伞</strong>（厦门台风能吹坏普通伞）</li>
+      <li><strong>泳衣</strong>（游泳必修学分！）</li>
+      <li><strong>环形衣架</strong>（多夹子款，军训期间晾袜子方便）</li>
+    </ul>
+  </div>
+
+  <div class="tip"><strong>老生建议：</strong>大件物品（床垫、盆、水桶等）网购直接寄学校快递站，开学驿站人会很多。衣架、垃圾桶等日用品到校后在超市买。</div>
+</section>
+
+<!-- ===== SECTION 8: 校园卡 ===== -->
+<section id="s8">
+  <h2><span class="icon"></span>八、校园卡 & 食堂</h2>
+
+  <div class="card">
+    <h3>校园卡类型</h3>
+    <p>厦门大学校园卡分为两种：</p>
+    <ul>
+      <li><strong>实体校园卡（一卡通）</strong>：新生报到注册时领取。用于食堂用餐、免费米饭、商超消费、宿舍淋浴、电费缴纳、门禁、图书借阅等。</li>
+      <li><strong>数字校园卡</strong>：基于银联"云闪付"APP，需自行开通，无需充值，消费直接从绑定的银行卡扣款。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>实体卡充值方式</h3>
+    <table>
+      <tr><th>渠道</th><th>操作方式</th></tr>
+      <tr><td>支付宝</td><td>搜索"校园一卡通" → 选择厦门大学 → 充值 → 到食堂POS机刷卡圈存</td></tr>
+      <tr><td>小灵龙APP</td><td>下载后选择厦门大学，可充值、缴电费、挂失、流水查询</td></tr>
+      <tr><td>圈存机</td><td>宿舍和园区内的自助终端，银行卡默认绑定充值</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>数字校园卡（云闪付）申领</h3>
+    <ol>
+      <li>下载"云闪付"APP，实名认证并绑定本人银联银行卡</li>
+      <li>搜索"<strong>厦大数字校园卡</strong>"小程序</li>
+      <li>确认身份后开通即可使用</li>
+    </ol>
+    <ul>
+      <li><strong>无需充值</strong>，消费直扣银行卡，免圈存</li>
+      <li>具备免费米饭资格的学生扫码可领<strong>免费米饭</strong>（显示 0.00 元）</li>
+      <li>校内食堂<strong>不支持</strong>微信/支付宝付款码直接支付，需用校园卡或数字校园卡</li>
+      <li>开通失败联系信息与网络中心：<strong>0592-2183508</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>思明校区食堂一览</h3>
+    <p>以下为思明校区所有食堂（共8个），不做推荐，仅列位置供参考：</p>
+    <table>
+      <tr><th>区域</th><th>食堂名称</th><th>位置</th></tr>
+      <tr><td rowspan="5">校本部</td><td>勤业餐厅</td><td>大南校门直走约300米，共三层（三楼为自助餐）</td></tr>
+      <tr><td>芙蓉餐厅</td><td>芙蓉隧道旁，有夜宵（至22:00）</td></tr>
+      <tr><td>东苑餐厅</td><td>与芙蓉餐厅毗邻，三楼为风味餐厅</td></tr>
+      <tr><td>南光餐厅</td><td>三家村广场、芙蓉一宿舍旁</td></tr>
+      <tr><td>海滨餐厅</td><td>海滨宿舍旁、法学院附近</td></tr>
+      <tr><td rowspan="3">海韵</td><td>海韵学生公寓第一餐厅</td><td>海韵学生公寓内</td></tr>
+      <tr><td>海韵学生公寓第二餐厅</td><td>海韵学生公寓内</td></tr>
+      <tr><td>海韵园餐厅</td><td>海韵园</td></tr>
+    </table>
+    <p style="font-size:0.85em;color:#999;">供餐时间参考：早餐 06:00—10:00 / 午餐 10:00—13:30 / 晚餐 16:00—19:30</p>
+  </div>
+
+  <div class="tip"><strong>老生建议：</strong>提前注册好云闪付APP并开通数字校园卡，入校即可在食堂扫码用餐，不用排队圈存。</div>
+</section>
+
+<!-- ===== SECTION 9: 校园网 ===== -->
+<section id="s9">
+  <h2><span class="icon"></span>九、免费校园网 & 电话卡</h2>
+
+  <div class="danger"><strong>核心结论：校园网完全免费！不需要办电话卡！</strong><br>
+  厦门大学为全体在校师生提供<strong>完全免费</strong>的校园网服务。使用校园网<strong>与电话卡无关</strong>，不办电话卡也能正常上网、选课。不要听信运营商推销说"不办卡不能上网/不能选课"！</div>
+
+  <div class="card">
+    <h3>三种无线校园网信号</h3>
+    <table>
+      <tr><th>信号名称</th><th>覆盖区域</th><th>使用场景</th></tr>
+      <tr><td><strong>XMUNET+</strong></td><td>食堂、教室、图书馆、运动场馆、部分室外</td><td>日常学习、公共区域上网</td></tr>
+      <tr><td><strong>XMU-DORM</strong></td><td>思明校区、翔安校区所有学生宿舍</td><td>宿舍上网</td></tr>
+      <tr><td><strong>eduroam</strong></td><td>全球联盟学校/单位</td><td>校外交流、出国使用</td></tr>
+    </table>
+  </div>
+
+  <h4>XMUNET+（公共区）使用步骤：</h4>
+  <ol>
+    <li>认证账号：<strong>学号</strong></li>
+    <li>认证密码：校园网接入密码（不同于统一身份认证密码）</li>
+    <li>首次设置：访问 https://pass.xmu.edu.cn，或通过<strong>云闪付APP → 厦大数字校园卡小程序 → 服务 → 密码修改</strong></li>
+  </ol>
+
+  <h4>XMU-DORM（宿舍区）开户流程：</h4>
+  <ol>
+    <li>先设置好校园网接入密码</li>
+    <li>携带<strong>身份证</strong>前往校内联通营业厅登记获取运营商宽带账号
+      <br>思明：东苑餐厅旁联通营业厅
+</li>
+    <li>连接XMUNET+后访问自助服务平台绑定宽带账号</li>
+    <li>在宿舍连接XMU-DORM，输入学号和密码即可上网</li>
+  </ol>
+
+  <table>
+    <tr><th>规格</th><th>说明</th></tr>
+    <tr><td>带宽</td><td>每人50Mbps</td></tr>
+    <tr><td>同时在线终端</td><td>最多3个</td></tr>
+    <tr><td>是否限流</td><td>不限流</td></tr>
+    <tr><td>费用</td><td><strong>完全免费</strong></td></tr>
+    <tr><td>是否需要额外路由器</td><td>不需要</td></tr>
+  </table>
+
+  <div class="tip"><strong>关于电话卡：</strong>免费校园网完全可以满足日常学习需求。是否另外办理校园电话卡（月租约40元+）取决于个人流量和网速需求，非强制。</div>
+</section>
+
+<!-- ===== SECTION 10: 医保 & 医疗 ===== -->
+<section id="s10">
+  <h2><span class="icon"></span>十、医保 & 医疗</h2>
+
+  <div class="card">
+    <h3>医疗保障体系（三层结构）</h3>
+    <ol>
+      <li><strong>基本医疗保险</strong>：个人缴费 + 国家财政补贴</li>
+      <li><strong>补充医疗保障</strong>：学校出资，免费提供</li>
+      <li><strong>补充商业保险</strong>：学校出资，免费提供</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>2025级参保缴费</h3>
+    <ul>
+      <li>参加<strong>厦门市2026年度大学生基本医疗保险</strong></li>
+      <li>个人缴费：<strong>450元/人</strong></li>
+      <li>待遇享受期：<strong>2025年9月1日 — 2026年12月31日</strong>（需满足连续参保条件）</li>
+      <li>未连续参保新生：待遇从2026年4月1日起生效</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>报销待遇标准</h3>
+    <table>
+      <tr><th>项目</th><th>标准</th><th>说明</th></tr>
+      <tr><td>门诊</td><td>无起付标准，1万以下报销45%-65%，1万以上65%-85%</td><td>按医院级别不同</td></tr>
+      <tr><td>住院</td><td>无起付标准，报销73%-90%</td><td>按医院级别</td></tr>
+      <tr><td>统筹最高支付</td><td>门诊+住院合计<strong>10万元</strong></td><td>—</td></tr>
+      <tr><td>大病保险最高</td><td><strong>50万元</strong></td><td>—</td></tr>
+      <tr><td>综合保障合计</td><td><strong>60万元/年</strong></td><td>—</td></tr>
+    </table>
+    <p><strong>补充医疗保障</strong>：基本医保报销后，医保范围内个人自付部分按<strong>80%</strong>比例补充报销。门诊额度5000元/年，住院额度20万元/年。</p>
+  </div>
+
+  <h4>就医规则：</h4>
+  <ul>
+    <li>应先去<strong>指定医院</strong>（厦大附属翔安医院/思明院区），可实时报销</li>
+    <li>需转诊：持指定医院<strong>转外就医证明</strong>，否则不予报销</li>
+    <li>寒暑假/实习期间在非厦门市的医保定点医院就医，无需转诊手续</li>
+    <li>补充医保报销每年暑假<strong>7-9月集中办理一次</strong></li>
+  </ul>
+
+  <div class="warn"><strong>重要提醒：</strong>省外新生需先在原参保地办理停保；厦门本市升学学生需先停掉原医保。必须在<strong>9月30日前</strong>参保缴费才能享受学校免费补充医保。</div>
+</section>
+
+<!-- ===== SECTION 11: 快递 & 交通 ===== -->
+<section id="s11">
+  <h2><span class="icon"></span>十一、快递 & 校园交通</h2>
+
+  <h3>快递收发</h3>
+  <ul>
+    <li>寄送地址：<strong>福建省厦门市思明区思明南路422号厦门大学南光路10-1号南光鸟箱</strong></li>
+    <li>大件行李提前网购寄到学校快递站，开学驿站人很多</li>
+    <li>具体取件流程见入学须知中后勤集团快递攻略</li>
+  </ul>
+
+  <h3>校园交通</h3>
+  <ul>
+    <li><strong>校车/班车</strong>：思明校区 ↔ 翔安校区有校车运行，时刻表可在后勤集团官网查询</li>
+    <li><strong>共享单车</strong>：思明校区无共享单车，住海韵需往返本部的建议买自行车</li>
+    <li><strong>寒暑假</strong>期间班车时间、车次会调整</li>
+    <li>新生报到期间，厦门北站、高崎机场均设有新生接待点和免费专车</li>
+    <li><strong>禁止</strong>携带或购买电动车在校园骑乘</li>
+  </ul>
+
+  <h3>外卖</h3>
+  <ul>
+    <li>思明校区周边美食选择丰富，外卖通过美团/饿了么下单</li>
+    <li>各校区设有外卖柜，扫码取餐</li>
+  </ul>
+</section>
+
+<!-- ===== SECTION 12: 报到流程 ===== -->
+<section id="s12">
+  <h2><span class="icon"></span>十二、新生报到流程</h2>
+
+  <div class="card">
+    <h3>5步报到流程</h3>
+    <table>
+      <tr><th>步骤</th><th>内容</th></tr>
+      <tr><td><strong>1. 信息采集</strong></td><td>入学前登录新生服务平台（https://welcome.xmu.edu.cn），填写个人信息获取学号</td></tr>
+      <tr><td><strong>2. 缴学费</strong></td><td>通过校园缴费平台或微信公众号提前缴清学杂费</td></tr>
+      <tr><td><strong>3. 现场注册</strong></td><td>到学院注册点凭录取通知书登记，领取新生资料袋和校园卡</td></tr>
+      <tr><td><strong>4. 办理入住</strong></td><td>到指定园区办理入住，领取钥匙（部分宿舍电子锁刷校园卡开门）</td></tr>
+      <tr><td><strong>5. 递交档案</strong></td><td>按学院规定时间递交个人档案、户口、组织关系等材料</td></tr>
+    </table>
+  </div>
+
+  <h3>必备材料清单</h3>
+  <ul class="checklist">
+    <li>录取通知书（原件+复印件，多备几份）</li>
+    <li>身份证（原件+正反面复印件）</li>
+    <li>1寸白底/免冠照片（建议备11张，红白蓝底都备）+ 2寸照片2张</li>
+    <li>党团组织关系材料</li>
+    <li>高考档案（若当地要求自带）</li>
+    <li>兵役登记证（福建籍年满18周岁男性新生）</li>
+    <li>银行卡</li>
+  </ul>
+
+  <h3>学费参考</h3>
+  <table>
+    <tr><th>类别</th><th>学费</th><th>住宿费</th></tr>
+    <tr><td>本部文科类</td><td>约5,460元/年</td><td>约1,200元/年（四人间）</td></tr>
+    <tr><td>本部工科类</td><td>约6,760元/年</td><td>同上</td></tr>
+  </table>
+
+  <h3>交通路线</h3>
+  <table>
+    <tr><th>交通方式</th><th>思明校区</th></tr>
+    <tr><td>飞机（高崎机场）</td><td>BRT快8路至斗西路口站→转1路公交到厦大南普陀站</td></tr>
+    <tr><td>火车（厦门站）</td><td>1路公交直达，约30分钟</td></tr>
+    <tr><td>火车（厦门北站）</td><td>地铁1号线→镇海路站→转1路公交</td></tr>
+    <tr><td>新生专车</td><td>厦门北站、高崎机场均设有新生接待点，提供免费专车</td></tr>
+  </table>
+
+  <h3>家长同行安排</h3>
+  <ul>
+    <li>学院每年在迎新期间（通常为报到日上午）举行<strong>新生家长见面会</strong>（2025级在化学报告厅举行，近300名家长参会），副院长介绍学科特色与人才培养</li>
+    <li>学校周边酒店建议提前预订（厦大思明校区周边有厦门宾馆、格林豪泰等），报到期间房源紧张</li>
+    <li>报到当天校园内设有家长休息区，校内食堂对家长开放</li>
+    <li>思明校区可顺路参观南普陀寺（凭录取通知书免费）、白城沙滩、芙蓉隧道等</li>
+  </ul>
+
+  <div class="tip"><strong>老生建议：</strong>高峰期在10:00—13:00，下午错峰到校。宿舍床位若未分配，尽早到校占靠里、远离门的位置。</div>
+</section>
+
+<!-- ===== SECTION 13: 军训 ===== -->
+<section id="s13">
+  <h2><span class="icon"></span>十三、军训</h2>
+
+  <div class="card">
+    <h3>时间与作息</h3>
+    <p><strong>军训时间：9月7日 — 9月21日，共15天</strong></p>
+    <table>
+      <tr><th>时段</th><th>内容</th></tr>
+      <tr><td>6:20</td><td>起床号</td></tr>
+      <tr><td>6:40–7:10</td><td>早操（绕操场跑圈或站军姿）</td></tr>
+      <tr><td>8:30–11:30</td><td>上午训练（站军姿、踢正步，阳光直射强）</td></tr>
+      <tr><td>12:00–14:30</td><td>午休（关键续命时间）</td></tr>
+      <tr><td>14:30–17:30</td><td>下午训练（闽南太阳极毒）</td></tr>
+      <tr><td>19:30–21:00</td><td>夜训（拉歌、看电影，偶尔紧急集合）</td></tr>
+    </table>
+    <p><strong>训练地点</strong>：思明校区演武场/情人谷旁。中期约第9天有<strong>20公里拉练</strong>。</p>
+  </div>
+
+  <div class="card">
+    <h3>必备物品清单</h3>
+    <table>
+      <tr><th>类别</th><th>物品</th><th>说明</th></tr>
+      <tr><td rowspan="3"><strong>防晒</strong></td><td>SPF50+ PA++++ 防水防晒霜</td><td>2小时补涂一次</td></tr>
+      <tr><td>防晒面罩</td><td>遮脸和脖子</td></tr>
+      <tr><td>卸妆油+芦荟胶</td><td>晚上卸防晒+修复</td></tr>
+      <tr><td rowspan="3"><strong>穿戴</strong></td><td>硅胶鞋垫（3双轮换）</td><td>军训鞋极硬，或用卫生巾垫鞋</td></tr>
+      <tr><td>黑色长袜（5双起）</td><td>过脚踝</td></tr>
+      <tr><td>速干T恤/棉质背心</td><td>迷彩服内穿</td></tr>
+      <tr><td rowspan="3"><strong>防暑</strong></td><td>藿香正气水</td><td>防中暑必备</td></tr>
+      <tr><td>风油精/清凉油</td><td>防中暑+驱蚊</td></tr>
+      <tr><td>大容量水杯（1.5L-2L）</td><td>每天至少喝3瓶</td></tr>
+      <tr><td rowspan="2"><strong>其他</strong></td><td>润喉片/薄荷糖</td><td>喊口号保护嗓子</td></tr>
+      <tr><td>创可贴、纸巾、湿巾、能量棒</td><td>应急备用</td></tr>
+    </table>
+  </div>
+
+  <h4>经验 & 避坑</h4>
+  <ul>
+    <li>踢正步用<strong>前脚掌发力</strong>，省力不崴脚</li>
+    <li><strong>身体不适别硬撑！</strong>打报告去休息区</li>
+    <li>提前问学长姐哪个方队比较轻松（如军体拳）</li>
+    <li>符合减训/缓训/免训条件可申请（紫外线过敏、近期手术等）</li>
+    <li>男生军训须剪短发，可来校前提前剪好</li>
+    <li>别和教官硬刚，嘴甜少挨训</li>
+  </ul>
+
+  <div class="tip"><strong>饮食恢复：</strong>早餐一定要吃防低血糖。睡前热水泡脚15-30分钟，揉捏小腿缓解酸痛。保证每天7-9小时睡眠。</div>
+</section>
+
+<!-- ===== SECTION 14: 社团 & 活动 ===== -->
+<section id="s14">
+  <h2><span class="icon"></span>十四、社团 & 学生活动</h2>
+
+  <div class="card">
+    <h3>社团招募时间线</h3>
+    <table>
+      <tr><th>时间</th><th>事项</th><th>说明</th></tr>
+      <tr><td>军训期间</td><td>学生会招募</td><td>各部门宿舍扫楼宣传，仅限大一新生</td></tr>
+      <tr><td>12月份</td><td>百团大战</td><td>面向全校，无年级限制，涵盖吉他/戏剧/电影/轮滑等</td></tr>
+    </table>
+  </div>
+
+  <h3>参与建议</h3>
+  <ul>
+    <li><strong>班委竞选</strong>优先冲，加综测还能优先拿资源</li>
+    <li>学生组织选<strong>1-2个</strong>即可，超过3个容易时间碎片化</li>
+    <li>赶紧加学院新生QQ群，学长姐会分享课程笔记、考试重点、竞赛组队机会</li>
+  </ul>
+
+  <h4>竞赛与科研</h4>
+  <ul>
+    <li>挑战杯、互联网+、大创项目：大一即可组队参加</li>
+    <li>进实验室：大二积极联系导师，化学化工学院实验资源丰富</li>
+    <li>化学化工学院有学生会和科协等特色组织</li>
+  </ul>
+
+  <h4>校内兼职</h4>
+  <ul>
+    <li>推荐：图书馆助理、办公室学生助理（时薪15-20元）</li>
+    <li>家教版：厦门家教需求大</li>
+  </ul>
+</section>
+
+<!-- ===== SECTION 15: 安全警示 ===== -->
+<section id="s15">
+  <h2><span class="icon"></span>十五、安全警示</h2>
+
+  <div class="danger">
+    <ul>
+      <li>警惕"校园贷"和"高薪兼职"骗局</li>
+      <li>不轻信推销电话卡、英语资料的陌生人</li>
+      <li>不轻信学长学姐推销的英语辅导资料和四六级资料包（尤其是自称"官方"或"必修"的）</li>
+      <li>严禁到江河湖海游泳</li>
+      <li>大额现金及时存入银行</li>
+    </ul>
+  </div>
+
+  <div style="text-align:center; margin: 40px 0 20px; padding: 30px; background: linear-gradient(135deg, #e8f4fd, #f4ecf7); border-radius: 12px;">
+    <p style="font-size: 1.2em; color: #1a5276; margin: 0; font-style: italic;">
+      "大一不用太焦虑，绩点重要但别死磕。<br>
+      多去芙蓉湖边走走，去白城沙滩看看日落。<br>
+      厦大的浪漫，值得你慢慢体会 🌊"
+    </p>
+    <p style="color: #aaa; margin-top: 12px; font-size: 0.8em;">（以上寄语由 AI 整理自网络，非原文引用）</p>
+  </div>
+</section>
+
+</div><!-- .container -->
+
+<footer>
+  <p>本文档由 AI 辅助整理，信息来源包括厦门大学官网、小红书、微信公众号、知乎等公开平台。内容仅供参考，非官方发布。</p>
+  <p>文档持续更新中，如有补充或纠错请通过 GitHub Issues 反馈。</p>
+  <p style="margin-top: 8px;">作者：苹果一斤 | 生成时间：2026-08-11 | <a href="#">返回顶部</a></p>
+</footer>
+
+</body>
+</html>
