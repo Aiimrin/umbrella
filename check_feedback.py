@@ -1,18 +1,32 @@
 """
 反馈邮箱检查脚本
 每周运行一次，检查未读邮件并保存到桌面
+授权码从本地 secret.json 读取（该文件不提交到 git）
 """
 import imaplib
 import email
 from email.header import decode_header
+import json
 import os
 from datetime import datetime
 
 IMAP_SERVER = "imap.qq.com"
 EMAIL_ADDR = "2179662832@qq.com"
-AUTH_CODE = "REDACTED_请重新生成"
 OUTPUT_DIR = os.path.expanduser(r"E:\桌面\反馈邮件")
 MAX_EMAILS = 30
+
+# 授权码从仓库外的本地文件读取
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+SECRET_FILE = os.path.join(SCRIPT_DIR, "secret.json")
+
+
+def load_auth_code():
+    if not os.path.exists(SECRET_FILE):
+        raise FileNotFoundError(f"缺少 {SECRET_FILE}，请创建并填入授权码")
+    with open(SECRET_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data["auth_code"]
+
 
 def decode_str(s):
     if s is None:
@@ -29,14 +43,16 @@ def decode_str(s):
             result.append(str(text))
     return "".join(result)
 
+
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M")
     out = os.path.join(OUTPUT_DIR, f"反馈_{stamp}.txt")
 
     try:
+        auth_code = load_auth_code()
         mail = imaplib.IMAP4_SSL(IMAP_SERVER)
-        mail.login(EMAIL_ADDR, AUTH_CODE)
+        mail.login(EMAIL_ADDR, auth_code)
         mail.select("INBOX")
 
         status, data = mail.search(None, "UNSEEN")
@@ -86,6 +102,7 @@ def main():
     except Exception as e:
         with open(out, "w", encoding="utf-8") as f:
             f.write(f"[{datetime.now()}] 错误：{e}\n")
+
 
 if __name__ == "__main__":
     main()
