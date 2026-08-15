@@ -8,12 +8,33 @@ import email
 from email.header import decode_header
 import json
 import os
+import re
 from datetime import datetime
 
 IMAP_SERVER = "imap.qq.com"
 EMAIL_ADDR = "2179662832@qq.com"
 OUTPUT_DIR = os.path.expanduser(r"E:\桌面\反馈邮件")
 MAX_EMAILS = 30
+
+
+def contains_chinese(text):
+    """判断文本是否包含中文字符（CJK统一表意文字）"""
+    return bool(re.search(r"[一-鿿]", text))
+
+
+def contains_japanese_kana(text):
+    """判断文本是否包含日文假名（平假名/片假名）"""
+    return bool(re.search(r"[぀-ヿ]", text))
+
+
+def is_chinese_email(subject, body):
+    """只保留中文邮件：含中文字符且不含日文假名"""
+    text = (subject or "") + (body or "")
+    if not contains_chinese(text):
+        return False  # 排除纯英文等无中文的邮件
+    if contains_japanese_kana(text):
+        return False  # 排除日文邮件
+    return True
 
 # 授权码从仓库外的本地文件读取
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -70,6 +91,7 @@ def main():
             return
 
         emails = []
+        filtered_count = 0
         for mid in msg_ids[-MAX_EMAILS:]:
             status, data = mail.fetch(mid, "(RFC822)")
             if status != "OK":
@@ -92,10 +114,15 @@ def main():
                     body = msg.get_payload(decode=True).decode("utf-8", errors="replace")
                 except Exception:
                     body = str(msg.get_payload())
+
+            # 语言筛选：只保留中文邮件
+            if not is_chinese_email(subject, body):
+                filtered_count += 1
+                continue
             emails.append({"subject": subject, "sender": sender, "date": date_str, "body": body[:2000]})
 
         with open(out, "w", encoding="utf-8") as f:
-            f.write(f"反馈邮箱检查报告\n时间：{datetime.now()}\n未读：{len(emails)} 封\n{'=' * 60}\n\n")
+            f.write(f"反馈邮箱检查报告\n时间：{datetime.now()}\n中文邮件：{len(emails)} 封（已过滤非中文邮件 {filtered_count} 封）\n{'=' * 60}\n\n")
             for i, em in enumerate(emails, 1):
                 f.write(f"--- 第{i}封 ---\n发件人：{em['sender']}\n时间：{em['date']}\n主题：{em['subject']}\n\n{em['body']}\n\n")
         mail.logout()
